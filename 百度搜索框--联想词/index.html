@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        .wrapper {
+            width: 700px;
+            /* border: 1px solid black; */
+            margin: 100px auto;
+        }
+        .inputBox {
+            width: 100%;
+            height: 30px;
+            /* border: 1px solid black; */
+        }
+        .inputBox input {
+            width: 80%;
+            height: 100%;
+        }
+        .inputBox div {
+            display: inline-block;
+            width: 18%;
+            height: 34px;
+            background-color: #3385ff;
+            line-height: 34px;
+            text-align: center;
+            vertical-align: bottom;
+            color: #fff;
+        }
+        ul {
+            display: none;
+            width: 688px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+        ul li {
+            width: 100%;
+            /* border-bottom: 1px solid #ccc; */
+        }
+        ul li:hover {
+            background-color: #ccc;
+        }
+        ul li a {
+            display: inline-block;
+            color: #333;
+            text-decoration: none;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="inputBox">
+            <input type="text"><div class="button">百度一下</div>
+        </div>
+        <ul></ul>
+    </div>
+    <script>
+        var oInput = document.getElementsByTagName('input')[0];
+        var oUl = document.getElementsByTagName('ul')[0];
+        
+        oInput.oninput = function() {
+            var value = this.value;
+
+            var oScript = document.createElement('script');
+            oScript.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+ value +"&cb=doJson";
+            document.body.appendChild(oScript);
+            document.body.removeChild(oScript);
+
+        }
+
+
+        function doJson(data) {
+            var s = data.s;
+            if(s.length > 0) {
+                var str = '';
+                s.forEach(function (ele, index) {
+                    str += '<li><a href="https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=0&rsv_idx=1&tn=baidu&wd=' + ele + '">' + ele + '</a></li>';
+                })
+                oUl.innerHTML = str;
+                oUl.style.display = 'block';
+            }else {
+                oUl.style.display = 'none';
+            }
+            
+        }
+        
+    </script>
+</body>
+</html>
